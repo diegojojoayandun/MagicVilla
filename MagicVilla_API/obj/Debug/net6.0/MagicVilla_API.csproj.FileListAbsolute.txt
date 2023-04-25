@@ -30,3 +30,7 @@ E:\proyectos-net\MagicVilla_API\MagicVilla\MagicVilla_API\bin\Debug\net6.0\Swash
 E:\proyectos-net\MagicVilla_API\MagicVilla\MagicVilla_API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 E:\proyectos-net\MagicVilla_API\MagicVilla\MagicVilla_API\obj\Debug\net6.0\MagicVilla_API.MvcApplicationPartsAssemblyInfo.cs
 E:\proyectos-net\MagicVilla_API\MagicVilla\MagicVilla_API\obj\Debug\net6.0\MagicVilla_API.csproj.CopyComplete
+E:\proyectos-net\MagicVilla_API\MagicVilla\MagicVilla_API\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+E:\proyectos-net\MagicVilla_API\MagicVilla\MagicVilla_API\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+E:\proyectos-net\MagicVilla_API\MagicVilla\MagicVilla_API\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\proyectos-net\MagicVilla_API\MagicVilla\MagicVilla_API\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
