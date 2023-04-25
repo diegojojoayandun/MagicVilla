@@ -67,7 +67,7 @@ namespace MagicVilla_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (VillaStore.villaList.FirstOrDefault(v=>v.Nombre.ToLower() == villaDto.Nombre.ToLower()) !=null) 
+            if (_db.Villas.FirstOrDefault(v=>v.Nombre.ToLower() == villaDto.Nombre.ToLower()) !=null) 
             {
                 ModelState.AddModelError("NombreExiste", "La villa con ese nombre ya existe!");
                 return BadRequest(ModelState);
@@ -82,8 +82,26 @@ namespace MagicVilla_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            villaDto.Id = VillaStore.villaList.OrderByDescending(v => v.Id).FirstOrDefault().Id +1;
-            VillaStore.villaList.Add(villaDto);
+            Villa modelo = new()
+            {
+                Nombre = villaDto.Nombre,
+                Detalle = villaDto.Detalle,
+                ImagenUrl = villaDto.ImagenUrl,
+                Ocupantes = villaDto.Ocupantes,
+                Tarifa = villaDto.Tarifa,
+                MetrosCuadrados=villaDto.MetrosCuadrados,
+                Amenidad = villaDto.Amenidad
+
+            };
+
+            _db.Add(modelo);
+            _db.SaveChanges();
+            
+            // To add a villa to list(non persistent)
+            /*villaDto.Id = VillaStore.villaList.OrderByDescending(v => v.Id).FirstOrDefault().Id +1;
+            VillaStore.villaList.Add(villaDto);*/
+
+
             
             return CreatedAtRoute("GetVilla", new { id=villaDto.Id}, villaDto );
 
@@ -100,12 +118,14 @@ namespace MagicVilla_API.Controllers
             {
                 return BadRequest();
             }
-            var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
+            //var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
+            var villa = _db.Villas.FirstOrDefault(v => v.Id == id);
             if (villa == null)
             {
                 return NotFound();
             }
-            VillaStore.villaList.Remove(villa);
+            _db.Remove(villa);
+            _db.SaveChanges();
             return NoContent();
         }
 
