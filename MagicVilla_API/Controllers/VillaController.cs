@@ -140,10 +140,26 @@ namespace MagicVilla_API.Controllers
             {
                 return BadRequest();
             }
-            var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
+            /*var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
             villa.Nombre= villaDto.Nombre;
             villa.Ocupantes= villaDto.Ocupantes;
-            villa.MetrosCuadrados=villaDto.MetrosCuadrados;
+            villa.MetrosCuadrados=villaDto.MetrosCuadrados;*/
+
+            Villa modelo = new()
+            {
+                Id = villaDto.Id,
+                Nombre = villaDto.Nombre,
+                Detalle = villaDto.Detalle,
+                ImagenUrl = villaDto.ImagenUrl,
+                Ocupantes = villaDto.Ocupantes,
+                Tarifa = villaDto.Tarifa,
+                MetrosCuadrados = villaDto.MetrosCuadrados,
+                Amenidad = villaDto.Amenidad
+
+            };
+
+            _db.Villas.Update(modelo);
+            _db.SaveChanges();
 
             return NoContent();
 
