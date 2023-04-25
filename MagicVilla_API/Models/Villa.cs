@@ -18,5 +18,6 @@ namespace MagicVilla_API.Models
         public string Amenidad { get; set; }
 
         public DateTime FechaCreacíon { get; set; }
+        public DateTime FechaActualizacion { get; set; }
     }
 }

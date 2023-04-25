@@ -14,10 +14,13 @@ namespace MagicVilla_API.Controllers
     public class VillaController : ControllerBase
     {
         private readonly ILogger<VillaController> _logger;
-        public VillaController(ILogger<VillaController> logger)
+        private readonly ApplicationDbContext _db;
+
+        public VillaController(ILogger<VillaController> logger, ApplicationDbContext db)
         {
 
             _logger = logger;
+            _db = db;
 
         }
         //Get All villas
@@ -26,7 +29,7 @@ namespace MagicVilla_API.Controllers
         public ActionResult<IEnumerable<VillaDto>> GetVillas()
         {
             _logger.LogInformation("Obtener las villas");
-            return Ok(VillaStore.villaList);
+            return Ok(_db.Villas.ToList());
         }
 
         // Get villa by Id
@@ -41,7 +44,9 @@ namespace MagicVilla_API.Controllers
                 return BadRequest();
             }
 
-            var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
+            //var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
+
+            var villa = _db.Villas.FirstOrDefault(v => v.Id == id);
             if (villa==null)
             {
                 return NotFound();
@@ -50,6 +55,7 @@ namespace MagicVilla_API.Controllers
             return Ok(villa);
         }
 
+        // Add new villa to database
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
