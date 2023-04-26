@@ -176,14 +176,48 @@ namespace MagicVilla_API.Controllers
             {
                 return BadRequest();
             }
-            var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
 
-            patchDto.ApplyTo(villa, ModelState);
+            var villa = _db.Villas.FirstOrDefault(v => v.Id == id);
+
+            VillaDto villaDto = new()
+            {
+                Id = villa.Id,
+                Nombre = villa.Nombre,
+                Detalle = villa.Detalle,
+                ImagenUrl = villa.ImagenUrl,
+                Ocupantes = villa.Ocupantes,
+                Tarifa = villa.Tarifa,
+                MetrosCuadrados= villa.MetrosCuadrados,
+                Amenidad = villa.Amenidad
+            };
+            //var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
+
+            if (villa == null) return BadRequest();
+
+            patchDto.ApplyTo(villaDto, ModelState);
+
+
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            Villa modelo = new()
+            {
+                Id = villaDto.Id,
+                Nombre = villaDto.Nombre,
+                Detalle = villaDto.Detalle,
+                ImagenUrl = villaDto.ImagenUrl,
+                Ocupantes = villaDto.Ocupantes,
+                Tarifa = villaDto.Tarifa,
+                MetrosCuadrados = villaDto.MetrosCuadrados,
+                Amenidad = villaDto.Amenidad
+
+            };
+
+            _db.Villas.Update(modelo);
+            _db.SaveChanges();
 
             return NoContent();
 
