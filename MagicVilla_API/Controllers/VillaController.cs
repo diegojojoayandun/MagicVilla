@@ -179,6 +179,11 @@ namespace MagicVilla_API.Controllers
 
             var villa = _db.Villas.FirstOrDefault(v => v.Id == id);
 
+            if (villa == null)
+            {
+                return BadRequest();
+            }
+
             VillaDto villaDto = new()
             {
                 Id = villa.Id,
