@@ -61,7 +61,7 @@ namespace MagicVilla_API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<VillaDto> CreateVilla([FromBody] VillaDto villaDto)
+        public ActionResult<VillaDto> CreateVilla([FromBody] VillaCreateDto villaDto)
         {
             if(!ModelState.IsValid)
             {
@@ -78,10 +78,7 @@ namespace MagicVilla_API.Controllers
             {
                 return BadRequest(villaDto);
             }
-            if (villaDto.Id > 0)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            
 
             Villa modelo = new()
             {
@@ -104,7 +101,7 @@ namespace MagicVilla_API.Controllers
 
 
             
-            return CreatedAtRoute("GetVilla", new { id=villaDto.Id}, villaDto );
+            return CreatedAtRoute("GetVilla", new { id=modelo.Id}, modelo );
 
         }
 
@@ -135,7 +132,7 @@ namespace MagicVilla_API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult UpdateVilla(int id, [FromBody] VillaDto villaDto) 
+        public IActionResult UpdateVilla(int id, [FromBody] VillaUpdateDto villaDto) 
         {
             if(villaDto==null || id != villaDto.Id)
             {
@@ -171,7 +168,7 @@ namespace MagicVilla_API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult UpdatePartialVilla(int id, JsonPatchDocument<VillaDto> patchDto)
+        public IActionResult UpdatePartialVilla(int id, JsonPatchDocument<VillaUpdateDto> patchDto)
         {
             if (patchDto == null || id ==0)
             {
@@ -185,7 +182,7 @@ namespace MagicVilla_API.Controllers
                 return BadRequest();
             }
 
-            VillaDto villaDto = new()
+            VillaUpdateDto villaDto = new()
             {
                 Id = villa.Id,
                 Nombre = villa.Nombre,
